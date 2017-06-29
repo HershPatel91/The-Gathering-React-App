@@ -6,7 +6,7 @@ export default class Login extends Component {
    constructor(){
     super()
     this.state = {
-      username: '',
+      email: '',
       password: ''
     }
     this.handleChange = this.handleChange.bind(this)
@@ -22,7 +22,7 @@ export default class Login extends Component {
   handleSubmit(e){
     e.preventDefault()
     this.props.onSubmit( this.state )
-    this.setState({username: '', password: ''})
+    this.setState({email: '', password: ''})
   }
 
   render(){
@@ -31,8 +31,8 @@ export default class Login extends Component {
       <div>
         <form>
         <div className="form-group">
-          <label for="Username" className="form_labels">Username</label>
-          <input type='text' className="form-control" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange}/>
+          <label for="Email" className="form_labels">Email</label>
+          <input type='email' className="form-control" placeholder="Email" name="email" value={this.state.email} onChange={this.handleChange}/>
         </div>
         <div className="form-group">
           <label for="Password" className="form_labels">Password</label>

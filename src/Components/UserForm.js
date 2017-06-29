@@ -6,7 +6,7 @@ export default class UserForm extends Component {
   constructor(){
     super()
     this.state = {
-      username: "",
+      email: "",
       password: "",
       name: "",
       gender: "",
@@ -29,7 +29,7 @@ export default class UserForm extends Component {
   handleSubmit(e){
     e.preventDefault()
     this.props.onSubmit( this.state )
-    this.setState({username: "", password: "", name: "", gender: "", age: "", description: "", picture: ""})
+    this.setState({email: "", password: "", name: "", gender: "", age: "", description: "", picture: ""})
   }
 
   render(){
@@ -38,8 +38,8 @@ export default class UserForm extends Component {
       <div>
         <form>
         <div className="form-group">
-          <label for="Username" className="form_labels">Username</label>
-          <input type='text' className="form-control" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange}/>
+          <label for="Email" className="form_labels">Email</label>
+          <input type='text' className="form-control" placeholder="Email" name="email" value={this.state.email} onChange={this.handleChange}/>
         </div>
         <div className="form-group">
           <label for="password" className="form_labels">Password</label>
