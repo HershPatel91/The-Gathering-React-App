@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Link, Route } from 'react-router-dom'
+import '../style.css'
+
 
 export default class Login extends Component {
 
@@ -39,7 +41,7 @@ export default class Login extends Component {
           <input type='password' className="form-control" name="password" value={this.state.password} onChange={this.handleChange}/>
         </div>
         <div className="form-group">
-          <Link to='/'><button type='submit' className="btn btn-primary welcome_button" onClick={this.handleSubmit} >Log In</button></Link>
+          <Link to='/events'><button type='submit' className="btn welcome_button" onClick={this.handleSubmit} >Log In</button></Link>
         </div>
         </form>
       </div>  

@@ -2,9 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import AttendedEvents from '../Components/AttendedEvents'
 import AttendingEvents from '../Components/AttendingEvents'
+import HostingEvents from '../Components/HostingEvents'
+import AppliedEvents from '../Components/AppliedEvents'
 import '../style.css'
 
-export default function UserDetail({user}){
+export default function MyProfile({user}){
 
  if (!user) {
     return null
@@ -28,21 +30,26 @@ return(
         	<p className="normal_text">{user.description}</p>
           </div>
           <div className="row heightbuffersmall">
-        	<button>Add Friend</button>
           </div>
       </div>
       <div className="col-md-6"> 
          <div className="row">
-            <h1 className='default_title'>Past Events</h1>
+            <h1 className='default_title'>Events Hosting</h1>
          </div>
-            <div className="row">
-              <h4><AttendedEvents attended_parties={user.attended_events}/></h4>
+            <div className="row" id="eventscroll">
+              <h4 ><HostingEvents hosted_parties={user.hosted_events}/></h4>
             </div>
-            <div className="row heightbufferuser">
+            <div className="row heightbuffersmall">
               <h4 className="default_title">Events Attending</h4>
-            </div>
-            <div className="row">
+              <div className="row"  id="eventscroll">
               <h4 className="default_title"><AttendingEvents attending_parties={user.attending_events}/></h4>
+            </div>
+            </div> 
+            <div className="row heightbuffersmall">
+              <h4 className="default_title">Events Applied</h4>
+            </div>
+            <div className="row" id="eventscroll">
+              <h4 className="default_title" ><AppliedEvents applied_parties={user.applied_events}/></h4>
             </div>
        </div>
     </div>
