@@ -126,9 +126,6 @@ constructor(){
 }
 }
 
-onClick(e){
-}
-
  render() {
 var markers = this.props.parties.map( party => { return <Marker lat={party.latitude} lng={party.longitude} party={party}/> })
 

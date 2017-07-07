@@ -71,6 +71,84 @@ function headers(){
   }
 }
 
+export class PartyGuestsAdapter  {
+
+  static create(partyguest){
+    return fetch(`${this.url()}`, {
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({
+        partyguest: {guest_id: partyguest.guest_id, party_id: partyguest.party_id, status: "applied"}
+      })
+    }).then(response => response.json() )
+  }
+
+  static update(partyguest){
+    return fetch(`${this.url()}/${partyguest.id}`, {
+      method: 'PATCH',
+      headers: headers(),
+      body: JSON.stringify({
+        partyguest: {id: partyguest.id, status: partyguest.status}
+      })
+    }).then(response => response.json())
+  }
+
+  static url(){
+    return `${baseUrl}/party_guests`
+  }
+}
+
+function headers(){
+  return {
+    'content-type': 'application/json',
+    'accept': 'application/json',
+    // 'Authorization': localStorage.getItem('user_id')
+  }
+}
+
+export class FriendshipAdapter  {
+
+   static all(){
+    return fetch(`${this.url()}`, {
+      headers: headers()
+    })
+      .then( res => res.json() )
+  }
+
+  static create(friendship){
+    return fetch(`${this.url()}`, {
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({
+        friendship: {related_user_id: friendship.related_user_id, user_id: friendship.user_id, status: "requested"}
+      })
+    }).then(response => response.json() )
+  }
+
+  static update(friendship){
+    return fetch(`${this.url()}/${friendship.id}`, {
+      method: 'PATCH',
+      headers: headers(),
+      body: JSON.stringify({
+        friendship: {id: friendship.id, status: friendship.status}
+      })
+    }).then(response => response.json())
+  }
+
+  static url(){
+    return `${baseUrl}/friendships`
+  }
+}
+
+function headers(){
+  return {
+    'content-type': 'application/json',
+    'accept': 'application/json',
+    // 'Authorization': localStorage.getItem('user_id')
+  }
+}
+
+
 export class UsersAdapter  {
   static all(){
     return fetch(`${this.url()}`, {

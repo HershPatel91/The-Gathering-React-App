@@ -31,7 +31,6 @@ export default class EventForm extends Component {
   }
 
   handleSubmit(e){
-    var test = "test"
     e.preventDefault()
     this.props.onSubmit( this.state )
     this.setState({title: "", date: "", description: "", location: "", capacity: "", image: "", time: "", cover: "", location_area: "", admin_id: 1})

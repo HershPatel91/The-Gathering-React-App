@@ -21,8 +21,12 @@ export default function About(){
       	<br></br>
       	<br></br>
       	<br></br>
-      	<Link to='../login'><button type="button" className="welcome_button col-md-6 btn">Log in</button></Link>
-      	<Link to='../newuser'><button type="button" className="welcome_button col-md-6 col-md-offset-2 btn">New User</button></Link>
+        <div className="col-md-12">
+        <div className="row">
+      	<Link to='../login'><button type="button" className="welcome_button col-md-4 col-md-offset-1 btn">Log in</button></Link>
+      	<Link to='../newuser'><button type="button" className="welcome_button col-md-4 col-md-offset-1 btn">New User</button></Link>
+        </div>
+        </div>
       	</div>
     </div>
   )

@@ -9,7 +9,8 @@ import EventDetail from '../Components/EventDetail'
 import UserForm from '../Components/UserForm'
 import UserDetail from '../Components/UserDetail'
 import MyProfile from '../Components/MyProfile'
-import {PartiesAdapter, UsersAdapter, AuthAdapter} from '../Adapters'
+import Notifications from '../Components/Notifications'
+import {PartiesAdapter, UsersAdapter, AuthAdapter, PartyGuestsAdapter, FriendshipAdapter} from '../Adapters'
 import '../style.css'
 
 
@@ -21,6 +22,7 @@ class EventContainer extends Component {
     this.state = {
       parties: [],
       users: [],
+      friendships: [],
        auth: {
         isLoggedIn: false,
         user: {}
@@ -31,13 +33,20 @@ class EventContainer extends Component {
     this.deleteParty = this.deleteParty.bind(this)
     this.updateParty = this.updateParty.bind(this)
     this.logIn = this.logIn.bind(this)
+    this.loggedInUser = this.loggedInUser.bind(this)
+    this.createPartyGuest = this.createPartyGuest.bind(this)
+    this.updatePartyGuest = this.updatePartyGuest.bind(this)
+    this.createFriendship = this.createFriendship.bind(this)
+    this.updateFriendship = this.updateFriendship.bind(this)
   }
 
   componentDidMount(){
       PartiesAdapter.all()
         .then( data => this.setState({ parties: data}) )
       UsersAdapter.all()
-        .then( data => this.setState({ users: data}) )
+        .then( data => this.setState({ users: data}) ) 
+      FriendshipAdapter.all()
+        .then( data => this.setState({ friendships: data}) )
     }
 
 
@@ -60,6 +69,32 @@ class EventContainer extends Component {
       })
     )
       this.props.history.push('/events')
+  }
+
+  createPartyGuest(partyguest){
+    PartyGuestsAdapter.create(partyguest)
+      .then(this.props.history.push('/events'))
+  }
+
+createFriendship(friendship){
+    FriendshipAdapter.create(friendship)
+      .then(friendship => this.setState((previousState) => {
+        return {
+            friendships: [...previousState.friendships, friendship]
+        }
+      })
+    )
+      this.props.history.push('/events')
+  }
+
+updatePartyGuest(partyguest){
+    PartyGuestsAdapter.update(partyguest)
+     .then( data => this.setState({ parties: data}) )
+  }
+
+  updateFriendship(friendship){
+    FriendshipAdapter.update(friendship)
+     .then( data => this.setState({ users: data}) )
   }
 
   deleteParty(id){
@@ -90,30 +125,32 @@ class EventContainer extends Component {
     })
   }
 
-
+  loggedInUser(){
+    const id = localStorage.getItem('user_id')
+    const user = this.state.users.find( p =>  p.id === parseInt(id) )
+    return user
+  }
 
   render() {
   return (
     	<div>
     	<Switch>
-            <Route exact path='/newevent' render={() => <EventForm onSubmit={this.createParty}/>} />
+            <Route exact path='/eventform' render={() => <EventForm onSubmit={this.createParty}/>} />
             <Route exact path='/events' render={() => <Events parties={this.state.parties}/> } />
             <Route exact path='/events/:id' render={(routerProps) => {
               const id = routerProps.match.params.id
               const party = this.state.parties.find( p =>  p.id === parseInt(id) )
-              return <EventDetail party={party}/> }} />
-            <Route exact path='/myevents' render={() => {
-              const id = localStorage.getItem('user_id')
-              const user = this.state.users.find( p =>  p.id === parseInt(id) )
-              return <MyProfile user={user}/> }} />
+              return <EventDetail party={party} user={this.loggedInUser()} onSubmit = {this.createPartyGuest}/> }} />
+            <Route exact path='/myprofile' render={() => <MyProfile user={this.loggedInUser()}/> } />
             <Route exact path='/users/:id' render={(routerProps) => {
               const id = routerProps.match.params.id
               const user = this.state.users.find( u =>  u.id === parseInt(id) )
-              return <UserDetail user={user}/> }} />
+              return <UserDetail user={user} current_user={this.loggedInUser()} onSubmit={this.createFriendship}/> }} />
             <Route exact path='/about' render={() => <About />} />
             <Route exact path='/' render={() => <Welcome />} />
             <Route exact path='/login' render={() => <Login  onSubmit={this.logIn}/>} />
             <Route exact path='/newuser' render={() => <UserForm />} />
+            <Route exact path='/notifications' render={() => <Notifications parties={this.state.parties} user={this.loggedInUser()} onAccept={this.updatePartyGuest} onReject={this.updatePartyGuest} onAcceptFriend={this.updateFriendship} onRejectFriend={this.updateFriendship}/>} />
          </Switch>
       </div>
 

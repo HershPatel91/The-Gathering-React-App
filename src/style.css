@@ -187,7 +187,11 @@
 
 #eventscroll {
     width: 900px;
-    height: 16em;
+    height: 13em;
     overflow-y: scroll;
   	white-space:nowrap;
+}
+
+.container{
+	display: flex;
 }

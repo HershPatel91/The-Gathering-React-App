@@ -57,7 +57,7 @@ export default class Events extends Component {
 
   return(
     <div>
-    	<div className="col-md-12">
+    	<div className="col-md-12 container">
         <div className="col-md-1">
           <div className="row heightbuffer">
             <Map location={this.state.locationTerm} parties={this.filterParties()}/>

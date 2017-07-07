@@ -4,7 +4,7 @@ import React from 'react'
 const LocationSearch = (props) => {
   return (
     <div className="form-group">
-          <select className="form-control normal_text" name="locationTerm" defaultValue={props.locationTerm} onChange={props.handleChange}>
+          <select className="form-control normal_text" name="locationTerm"  onChange={props.handleChange}>
             <option>All</option>
             <option>Financial District</option>
             <option>Chinatown</option>

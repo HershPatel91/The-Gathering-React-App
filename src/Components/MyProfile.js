@@ -10,7 +10,11 @@ export default function MyProfile({user}){
 
  if (!user) {
     return null
-  }
+  } else {
+
+  let friends = user.friends
+  let f = friends.map(friend => {return friend.user.id === user.id ? friend.friend : friend.user})
+
 
 return(
 	<div className="container-fluid">
@@ -29,7 +33,8 @@ return(
         	<h1 className='default_title heightbuffersmall'>User Bio</h1>
         	<p className="normal_text">{user.description}</p>
           </div>
-          <div className="row heightbuffersmall">
+          <div className="row heightbuffer">
+              <Link to='/notifications'><button className="btn event_button">View Notifications</button></Link>
           </div>
       </div>
       <div className="col-md-6"> 
@@ -51,11 +56,17 @@ return(
             <div className="row" id="eventscroll">
               <h4 className="default_title" ><AppliedEvents applied_parties={user.applied_events}/></h4>
             </div>
+            <div className="row">
+              <h4 className="default_title">Friends</h4>
+            <div className="row" id="scroll">
+              {f.map((friend)=> <Link to={`/users/${friend.id}`}><img className='guest' src={friend.picture} height="100" width='100'></img></Link>)}
+            </div>
+            </div>
        </div>
     </div>
 
 	)
-
+}
 
 }
   
