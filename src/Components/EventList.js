@@ -11,8 +11,7 @@ export default function EventList (props){
     <div>
       <div className="col-md-12 flow"> 
         { props.parties.map((party) => 
-          <div>
-
+          <div className="border">
           <Link to={`/events/${party.id}`}><h3 className="default_header">{ party.title }</h3></Link>
           <p className="normal_text">{party.date}</p>
           <p className="normal_text">{party.time}</p>

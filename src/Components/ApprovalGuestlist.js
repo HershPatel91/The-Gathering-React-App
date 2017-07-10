@@ -30,7 +30,7 @@ handleReject(e){
         applied_guests = <h2 className="normal_text">Select a Party</h2>
       } else {
     party = this.props.parties.find(function(party) {return party.title === this.props.hosted_party}.bind(this))
-    applied_guests = party.applied_guests.map(guest => {return <div><Link to={`/users/${guest.guest.id}`}><h3 className="normal_text">{guest.guest.name}</h3></Link><p className="normal_text">{guest.guest.description}</p><button type="submit" onClick = {this.handleAccept} className="event_button btn" value={guest.id}>Accept</button><button type="submit" value={guest.id} onClick = {this.handleReject} className="event_button btn heightbuffersmall">Reject</button></div>}) }
+    applied_guests = party.applied_guests.map(guest => {return <div className="notifications"><Link to={`/users/${guest.guest.id}`}><h3 className="normal_text">{guest.guest.name}</h3></Link><p className="normal_text">{guest.guest.description}</p><button type="submit" onClick = {this.handleAccept} className="event_button btn" value={guest.id}>Accept</button><button type="submit" value={guest.id} onClick = {this.handleReject} className="event_button btn heightbuffersmall">Reject</button></div>}) }
 
 
   	if (this.props.parties) {

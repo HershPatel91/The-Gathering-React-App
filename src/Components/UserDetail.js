@@ -11,11 +11,29 @@ export default class UserDetail extends Component {
     this.state = {
       }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.friendIds = this.friendIds.bind(this)
+    this.setButton = this.setButton.bind(this)
 }
 
 handleSubmit(e){
   e.preventDefault()
   this.props.onSubmit({related_user_id: this.props.user.id, user_id: this.props.current_user.id, status: "requested"} )
+}
+
+setButton(){
+  let id = this.friendIds()
+  if (id.includes(this.props.current_user.id)) {
+    return <button className="event_button">Hi Friend!</button>
+  } else {
+    return <button className="event_button" onClick={this.handleSubmit}>Add Friend</button>
+  }
+}
+
+friendIds(){
+  let user_friends_users = this.props.user.friends.map((friend) => friend.user.id)
+  let user_friends_friends = this.props.user.friends.map((friend) => friend.friend.id)
+  let all_friends = user_friends_users.concat(user_friends_friends)
+  return all_friends
 }
 
 render() {
@@ -46,7 +64,7 @@ return(
         	<p className="normal_text">{this.props.user.description}</p>
           </div>
           <div className="row heightbuffer">
-        	<button className="event_button" onClick={this.handleSubmit}>Add Friend</button>
+            {this.setButton()}
           </div>
       </div>
       <div className="col-md-6"> 

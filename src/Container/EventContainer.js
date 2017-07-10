@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { Route, Switch, withRouter} from 'react-router-dom'
 import EventForm from '../Components/EventForm'
-import Welcome from '../Components/Welcome'
-import About from '../Components/About'
-import Login from '../Components/Login'
 import Events from '../Components/Events'
 import EventDetail from '../Components/EventDetail'
 import UserForm from '../Components/UserForm'
@@ -32,7 +29,6 @@ class EventContainer extends Component {
     this.createParty = this.createParty.bind(this)
     this.deleteParty = this.deleteParty.bind(this)
     this.updateParty = this.updateParty.bind(this)
-    this.logIn = this.logIn.bind(this)
     this.loggedInUser = this.loggedInUser.bind(this)
     this.createPartyGuest = this.createPartyGuest.bind(this)
     this.updatePartyGuest = this.updatePartyGuest.bind(this)
@@ -41,24 +37,18 @@ class EventContainer extends Component {
   }
 
   componentDidMount(){
+    if (!localStorage.getItem('user_id')){
+       this.props.history.push('/')
+    } else {
       PartiesAdapter.all()
         .then( data => this.setState({ parties: data}) )
       UsersAdapter.all()
         .then( data => this.setState({ users: data}) ) 
       FriendshipAdapter.all()
         .then( data => this.setState({ friendships: data}) )
+      }
     }
 
-
-  logIn(user){
-    AuthAdapter.currentUser(user)
-   .then(user => {
-     if (!user.error) {
-       localStorage.setItem("user_id", user.id)
-        this.props.history.push('/events')
-     }
-   })
- }
 
   createParty(party){
     PartiesAdapter.create(party)
@@ -146,9 +136,6 @@ updatePartyGuest(partyguest){
               const id = routerProps.match.params.id
               const user = this.state.users.find( u =>  u.id === parseInt(id) )
               return <UserDetail user={user} current_user={this.loggedInUser()} onSubmit={this.createFriendship}/> }} />
-            <Route exact path='/about' render={() => <About />} />
-            <Route exact path='/' render={() => <Welcome />} />
-            <Route exact path='/login' render={() => <Login  onSubmit={this.logIn}/>} />
             <Route exact path='/newuser' render={() => <UserForm />} />
             <Route exact path='/notifications' render={() => <Notifications parties={this.state.parties} user={this.loggedInUser()} onAccept={this.updatePartyGuest} onReject={this.updatePartyGuest} onAcceptFriend={this.updateFriendship} onRejectFriend={this.updateFriendship}/>} />
          </Switch>

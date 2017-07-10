@@ -12,10 +12,7 @@ export class AuthAdapter {
   static currentUser(user){
    return fetch(`${baseUrl}/current_user`, {
      method: 'POST',
-     headers: {
-       'content-type': 'application/json',
-       'accept': 'application/json'
-     },
+     headers: headers(),
      body: JSON.stringify({
        user: user
      })
@@ -63,14 +60,6 @@ export class PartiesAdapter  {
   }
 }
 
-function headers(){
-  return {
-    'content-type': 'application/json',
-    'accept': 'application/json',
-    // 'Authorization': localStorage.getItem('user_id')
-  }
-}
-
 export class PartyGuestsAdapter  {
 
   static create(partyguest){
@@ -95,14 +84,6 @@ export class PartyGuestsAdapter  {
 
   static url(){
     return `${baseUrl}/party_guests`
-  }
-}
-
-function headers(){
-  return {
-    'content-type': 'application/json',
-    'accept': 'application/json',
-    // 'Authorization': localStorage.getItem('user_id')
   }
 }
 
@@ -137,14 +118,6 @@ export class FriendshipAdapter  {
 
   static url(){
     return `${baseUrl}/friendships`
-  }
-}
-
-function headers(){
-  return {
-    'content-type': 'application/json',
-    'accept': 'application/json',
-    // 'Authorization': localStorage.getItem('user_id')
   }
 }
 
@@ -193,7 +166,7 @@ function headers(){
   return {
     'content-type': 'application/json',
     'accept': 'application/json',
-    // 'Authorization': localStorage.getItem('user_id')
+    'Authorization': localStorage.getItem('user_id')
   }
 }
 

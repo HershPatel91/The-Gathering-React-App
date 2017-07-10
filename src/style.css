@@ -195,3 +195,14 @@
 .container{
 	display: flex;
 }
+
+.border {
+	border-style: groove;
+}
+
+.notifications{
+	width: 510px;
+	box-sizing: border-box;
+	border-style: groove;    
+}
+
