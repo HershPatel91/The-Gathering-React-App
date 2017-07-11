@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
 import '../style.css'
+import MessageBoard from '../Components/MessageBoard'
 
 export default class EventDetail extends Component {
 
@@ -27,7 +28,8 @@ render(){
   let progress
   let applied_ids
   let approved_ids 
-  let rejected_ids 
+  let rejected_ids
+  let message 
 
 function setVariable(){
   if (this.props.party !== undefined && this.props.user !== undefined) {
@@ -66,9 +68,18 @@ function setAddress(){
   }
 }
 
+function setMessage(){
+  if(approved_ids.includes(this.props.user.id) || this.props.party.admin_id === this.props.user.id) {
+       message =  <MessageBoard party={this.props.party} onSubmit={this.props.onMessageSubmit} user={this.props.user}/>
+     } else {
+      null
+  }
+}
+
 setVariable = setVariable.bind(this)
 setAddress = setAddress.bind(this)
 setButton = setButton.bind(this)
+setMessage = setMessage.bind(this)
 
 
 
@@ -77,6 +88,8 @@ setButton = setButton.bind(this)
     setVariable()
     setAddress()
     setButton()
+    setMessage()
+    
   return(
     <div>
       <div className="container-fluid">
@@ -84,8 +97,13 @@ setButton = setButton.bind(this)
           <div className="col-md-6"> 
             <h1 className="default_title">{this.props.party.title}</h1>
           </div>
-          <div className="col-md-6"> 
+          <div className="col-md-6">
+            <div className="col-md-3">
             <h1 className='default_title'>Description</h1>
+            </div>
+            <div className="col-md-9">
+              {message}
+            </div>
           </div>
       </div>
         <div className="row heightbuffer">

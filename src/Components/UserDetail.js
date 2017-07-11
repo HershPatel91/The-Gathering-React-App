@@ -69,7 +69,7 @@ return(
       </div>
       <div className="col-md-6"> 
          <div className="row">
-            <h1 className='default_title'>Past Events</h1>
+              <h1 className='default_title'>Past Events</h1>      
          </div>
             <div className="row">
               <h4><AttendedEvents attended_parties={this.props.user.attended_events}/></h4>

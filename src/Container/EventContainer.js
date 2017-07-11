@@ -7,7 +7,7 @@ import UserForm from '../Components/UserForm'
 import UserDetail from '../Components/UserDetail'
 import MyProfile from '../Components/MyProfile'
 import Notifications from '../Components/Notifications'
-import {PartiesAdapter, UsersAdapter, AuthAdapter, PartyGuestsAdapter, FriendshipAdapter} from '../Adapters'
+import {PartiesAdapter, UsersAdapter, AuthAdapter, PartyGuestsAdapter, FriendshipAdapter, MessagesAdapter} from '../Adapters'
 import '../style.css'
 
 
@@ -34,6 +34,7 @@ class EventContainer extends Component {
     this.updatePartyGuest = this.updatePartyGuest.bind(this)
     this.createFriendship = this.createFriendship.bind(this)
     this.updateFriendship = this.updateFriendship.bind(this)
+    this.createMessage = this.createMessage.bind(this)
   }
 
   componentDidMount(){
@@ -61,7 +62,7 @@ class EventContainer extends Component {
       this.props.history.push('/events')
   }
 
-  createPartyGuest(partyguest){
+createPartyGuest(partyguest){
     PartyGuestsAdapter.create(partyguest)
       .then(this.props.history.push('/events'))
   }
@@ -75,6 +76,11 @@ createFriendship(friendship){
       })
     )
       this.props.history.push('/events')
+  }
+
+createMessage(message){
+    MessagesAdapter.create(message)
+    .then( data => this.setState({ parties: data}) )
   }
 
 updatePartyGuest(partyguest){
@@ -130,7 +136,7 @@ updatePartyGuest(partyguest){
             <Route exact path='/events/:id' render={(routerProps) => {
               const id = routerProps.match.params.id
               const party = this.state.parties.find( p =>  p.id === parseInt(id) )
-              return <EventDetail party={party} user={this.loggedInUser()} onSubmit = {this.createPartyGuest}/> }} />
+              return <EventDetail party={party} user={this.loggedInUser()} onSubmit = {this.createPartyGuest} onMessageSubmit={this.createMessage}/> }} />
             <Route exact path='/myprofile' render={() => <MyProfile user={this.loggedInUser()}/> } />
             <Route exact path='/users/:id' render={(routerProps) => {
               const id = routerProps.match.params.id

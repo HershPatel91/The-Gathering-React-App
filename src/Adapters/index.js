@@ -20,6 +20,23 @@ export class AuthAdapter {
 }
 }
 
+export class MessagesAdapter  {
+
+  static create(message){
+    return fetch(`${this.url()}`, {
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({
+        party: {message: message.message, party_id: message.party_id, user_id: message.user_id}
+      })
+    }).then(response => response.json() )
+  }
+
+  static url(){
+    return `${baseUrl}/messages`
+  }
+}
+
 export class PartiesAdapter  {
   static all(){
     return fetch(`${this.url()}`, {
@@ -59,6 +76,7 @@ export class PartiesAdapter  {
     return `${baseUrl}/parties`
   }
 }
+
 
 export class PartyGuestsAdapter  {
 
