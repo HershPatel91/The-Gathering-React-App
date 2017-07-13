@@ -133,7 +133,7 @@ var markers = this.props.parties.map( party => { return <Marker lat={party.latit
     	<div style={{width:'45vw', height: '40vw'}}>
                 <GoogleMap 
                   bootstrapURLKeys={{
-                    key: 'AIzaSyAFE_4OzjsZBjJAYsHdGOfu4ePuRcS6mY4',
+                    key: 'AIzaSyCV7ebL929Rw856hMaN-eNskRA3a8OOANI',
                     language: 'en'
                   }}
                   center={this.state.center} zoom={this.state.zoom}>

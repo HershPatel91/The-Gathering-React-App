@@ -5,8 +5,6 @@ import '../style.css'
 
 export default function MessageList (props){
 
-  debugger
-
   return(
     
     <div>

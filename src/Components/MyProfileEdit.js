@@ -3,18 +3,19 @@ import { Link, Route } from 'react-router-dom'
 import '../style.css'
 
 
-export default class UserForm extends Component {
+export default class MyProfileEdit extends Component {
 
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
-      email: "",
-      password: "",
-      name: "",
-      gender: "",
-      age: "",
-      description: "",
-      picture: ""
+      id: localStorage.user_id,
+      email: props.user.email,
+      password: props.user.password,
+      name: props.user.name,
+      gender: props.user.gender,
+      age: props.user.age,
+      description: props.user.description,
+      picture: props.user.picture
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -31,22 +32,13 @@ export default class UserForm extends Component {
   handleSubmit(e){
     e.preventDefault()
     this.props.onSubmit( this.state )
-    this.setState({email: "", password: "", name: "", gender: "", age: "", description: "", picture: ""})
   }
 
   render(){
-
+    debugger
     return(
       <div>
         <form>
-        <div className="form-group">
-          <label for="Email" className="form_labels">Email</label>
-          <input type='text' className="form-control" placeholder="Email" name="email" value={this.state.email} onChange={this.handleChange}/>
-        </div>
-        <div className="form-group">
-          <label for="password" className="form_labels">Password</label>
-          <input type='password' className="form-control" name="password" value={this.state.password} onChange={this.handleChange}/>
-        </div>
         <div className="form-group">
           <label for="Name" className="form_labels">Name</label>
           <input type="text" className="form-control" placeholder="Full Name" name="name" value={this.state.name} onChange={this.handleChange}/>

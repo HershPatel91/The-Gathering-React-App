@@ -21,6 +21,11 @@ handleSubmit(e){
     this.props.onSubmit({guest_id: this.props.user.id, party_id: this.props.party.id, status: "applied"} )
   }
 
+handleEdit(e){
+  e.preventDefault()
+  this.props.onSubmit({})
+}
+
 render(){
 
   let address
@@ -32,10 +37,10 @@ render(){
   let message 
 
 function setVariable(){
-  if (this.props.party !== undefined && this.props.user !== undefined) {
+  if (this.props.party.approved_guests !== undefined && this.props.user !== undefined) {
     progress = this.props.party.approved_guests.length/this.props.party.capacity*100,
     approved_ids = this.props.party.approved_guests.map((guests) => guests.guest.id),
-    applied_ids = this.props.user.applied_events.map((events) => events.party.id)
+    applied_ids = this.props.party.applied_guests.map((guests) => guests.guest.id)
     rejected_ids = this.props.party.rejected_guests.map((guests) => guests.guest.id)
   } else {
     this.setState({ progress: 0 })
@@ -45,16 +50,16 @@ function setVariable(){
 function setButton(){
 if(this.props.user && approved_ids.includes(this.props.user.id) && this.props.party){
     button_status = <Link to='../events'><button type="button" className="event_button btn">You are attending this event! More events.</button></Link>
-  } else if (this.props.user && applied_ids.includes(this.props.party.id) && this.props.party) {
+  } else if (this.props.user && applied_ids.includes(this.props.user.id) && this.props.party) {
     button_status = <Link to='../events'><button type="button" className="event_button btn">You have applied to this event! More events.</button></Link> 
   } else if (this.props.user && rejected_ids.includes(this.props.user.id) && this.props.party) {
     button_status = <Link to='../events'><button type="button" className="event_button btn">You were rejected from the event! More events.</button></Link> 
   } else if (this.props.user && this.props.party.admin_id === this.props.user.id) {
-    button_status = <Link to='../eventform'><button type="button" className="event_button btn">Edit Event</button></Link> 
+    button_status = <Link to={`../events/${this.props.party.id}/edit`}><button type="button" className="event_button btn">Edit Event</button></Link> 
   } else if (this.props.party.capacity === this.props.party.approved_guests.length && this.props.party && this.props.user){
     button_status = <Link to='../events'><button type="button" className="event_button btn">Sorry, party is full! More events.</button></Link> 
   } else if (this.props.party && this.props.user) {
-    button_status = <Link to='../events'><button type="submit" onClick = {this.handleSubmit} className="event_button btn">Add name to guest list!</button></Link> 
+    button_status = <button type="submit" onClick = {this.handleSubmit} className="event_button btn">Add name to guest list!</button>
   } else {
     return null
   }
@@ -70,7 +75,7 @@ function setAddress(){
 
 function setMessage(){
   if(approved_ids.includes(this.props.user.id) || this.props.party.admin_id === this.props.user.id) {
-       message =  <MessageBoard party={this.props.party} onSubmit={this.props.onMessageSubmit} user={this.props.user}/>
+       message =  <MessageBoard party = {this.props.party} onSubmit={this.props.onMessageSubmit} user={this.props.user}/>
      } else {
       null
   }
@@ -84,12 +89,12 @@ setMessage = setMessage.bind(this)
 
 
 
-  if (this.props.party && this.props.user) {
+  if (this.props.party && this.props.user && this.props.party.approved_guests) {
     setVariable()
     setAddress()
     setButton()
     setMessage()
-    
+
   return(
     <div>
       <div className="container-fluid">
@@ -138,7 +143,7 @@ setMessage = setMessage.bind(this)
           <div className="col-md-6 leftbufferdetail heightbuffersmall">
             <h4 className="normal_text">Date: {this.props.party.date}</h4>
             <br></br>
-            <h4 className="normal_text">Time: {this.props.party.time}</h4>
+            <h4 className="normal_text">Time: {this.props.party.format_time}</h4>
             <br></br>
             <h4 className="normal_text">Location: {this.props.party.location_area}</h4>
             {address}
@@ -165,7 +170,7 @@ setMessage = setMessage.bind(this)
   </div>
   )
   } else {
-    window.location.href = "http://localhost:3001/events"
+    window.location.href = `http://localhost:3001/events/`
    }
 }
 }

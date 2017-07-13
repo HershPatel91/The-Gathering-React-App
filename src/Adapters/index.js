@@ -153,7 +153,7 @@ export class UsersAdapter  {
       method: 'POST',
       headers: headers(),
       body: JSON.stringify({
-        user: {email: user.email, password: user.password, name: user.name, gender: user.gender, age: user.age, picture: user.picture}
+        user: {email: user.email, password: user.password, name: user.name, description: user.description, gender: user.gender, age: user.age, picture: user.picture}
       })
     }).then(response => response.json() )
   }
@@ -163,7 +163,7 @@ export class UsersAdapter  {
       method: 'PATCH',
       headers: headers(),
       body: JSON.stringify({
-        user: {email: user.email, password: user.password, name: user.name, gender: user.gender, age: user.age, picture: user.picture}
+        user: {name: user.name, description: user.description, gender: user.gender, age: user.age, picture: user.picture}
      })
     })
   }

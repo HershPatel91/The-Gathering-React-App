@@ -33,8 +33,11 @@ return(
         	<h1 className='default_title heightbuffersmall'>User Bio</h1>
         	<p className="normal_text">{user.description}</p>
           </div>
-          <div className="row heightbuffer">
+          <div className="row heightbuffersmall">
               <Link to='/notifications'><button className="btn event_button">View Notifications</button></Link>
+          </div>
+          <div className="row heightbuffervsmall">
+              <Link to='/myprofile/edit'><button className="btn event_button">Edit Profile</button></Link>
           </div>
       </div>
       <div className="col-md-6"> 

@@ -14,7 +14,7 @@ export default function EventList (props){
           <div className="border">
           <Link to={`/events/${party.id}`}><h3 className="default_header">{ party.title }</h3></Link>
           <p className="normal_text">{party.date}</p>
-          <p className="normal_text">{party.time}</p>
+          <p className="normal_text">{party.format_time}</p>
           <p className="normal_text">{party.location_area}</p>
           <p className="normal_text">{party.description}</p>
           <Link to={`/users/${party.admin.id}`}><p className="normal_text">Host: { party.admin.name }</p></Link>

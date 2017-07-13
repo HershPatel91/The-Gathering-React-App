@@ -3,21 +3,22 @@ import { Link } from 'react-router-dom'
 import '../style.css'
 
 
-export default class EventForm extends Component {
+export default class EventEdit extends Component {
 
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
-      title: "",
-      time: "",
-      date: "",
-      description: "",
-      location: "",
-      location_area: "Financial District",
-      capacity: "",
-      image: "",
-      cover: "",
-      admin_id: localStorage.user_id
+      id: props.party.id,
+      title: props.party.title,
+      time: props.party.time,
+      date: props.party.date,
+      description: props.party.description,
+      location: props.party.location,
+      location_area: props.party.location_area,
+      capacity: props.party.capacity,
+      image: props.party.image,
+      cover: props.party.cover,
+      admin_id: props.party.admin_id
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -32,12 +33,11 @@ export default class EventForm extends Component {
 
   handleSubmit(e){
     e.preventDefault()
-    debugger
     this.props.onSubmit( this.state )
-    this.setState({title: "", date: "", description: "", location: "", capacity: "", image: "", time: "", cover: "", location_area: "", admin_id: ""})
   }
 
   render(){
+
     return(
       <div>
         <form className="normal_text">
@@ -95,7 +95,7 @@ export default class EventForm extends Component {
           <input type='text' className="form-control" placeholder="Image URL" name="image" value={this.state.image} onChange={this.handleChange}/>
         </div>
         <div className="form-group">
-          <Link to='/'><button type='submit' className="btn event_button" onClick={this.handleSubmit} >Create an Event</button></Link>
+          <Link to={`/events/${this.props.party.id}`}><button type='submit' className="btn event_button" onClick={this.handleSubmit} >Edit an Event</button></Link>
         </div>
         </form>
       </div>  
